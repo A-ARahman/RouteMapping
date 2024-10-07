@@ -115,8 +115,8 @@ def main():
 
     for index, row in input_data.iterrows():
         user_id = row['OPTY_ID']
-        start_node = row['NODE_ASAL']
-        end_node = row['NODE_TUJUAN']
+        start_node = row['NODE ASAL']
+        end_node = row['NODE TUJUAN']
         bandwidth = row['BW']
         shortest_paths = DIJKSTRA(graph, start_node)
         path = reconstruct_path(shortest_paths, end_node)
