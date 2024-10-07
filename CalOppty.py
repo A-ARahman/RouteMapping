@@ -9,7 +9,7 @@ def convert_nodes_to_string(dataframe):
     dataframe['NODE TUJUAN'] = dataframe['NODE TUJUAN'].astype(str)
 
 # Read the Excel file
-dataframe = pd.read_excel('DIJKSTRA2.xlsx', sheet_name='TRUNK')
+dataframe = pd.read_excel('DIJKSTRA.xlsx', sheet_name='TRUNK')
 
 # Convert 'NODE ASAL' and 'NODE TUJUAN' to strings
 convert_nodes_to_string(dataframe)
@@ -25,7 +25,7 @@ for index, row in dataframe.iterrows():
     graph[start].append((cost, end, status))
     graph[end].append((cost, start, status))  # If the graph is undirected
 
-def DIJKSTRA2(graph, start):
+def DIJKSTRA(graph, start):
     # Priority queue to store (cost, node)
     queue = [(0, start)]
     # Dictionary to store the shortest path to each node
@@ -105,17 +105,20 @@ def main():
     start_time = time.time()  # Start the timer
 
     # Read input data from Excel file
-    input_data = pd.read_excel('DIJKSTRA2.xlsx', sheet_name='OPPTY')
+    input_data = pd.read_excel('DIJKSTRA.xlsx', sheet_name='OPPTY')
+
+    # Convert 'NODE ASAL' and 'NODE TUJUAN' to strings in input data
+    convert_nodes_to_string(input_data)
 
     # Load the existing workbook
-    workbook = load_workbook('DIJKSTRA2.xlsx')
+    workbook = load_workbook('DIJKSTRA.xlsx')
 
     for index, row in input_data.iterrows():
         user_id = row['OPTY_ID']
         start_node = row['NODE_ASAL']
         end_node = row['NODE_TUJUAN']
         bandwidth = row['BW']
-        shortest_paths = DIJKSTRA2(graph, start_node)
+        shortest_paths = DIJKSTRA(graph, start_node)
         path = reconstruct_path(shortest_paths, end_node)
         
         # Update the bandwidth in the TRUNK sheet and write user ID header
@@ -133,7 +136,7 @@ def main():
     remove_user_id_column(dataframe, input_data, workbook)
 
     # Save the workbook
-    workbook.save('DIJKSTRA2.xlsx')
+    workbook.save('DIJKSTRA.xlsx')
 
     end_time = time.time()  # End the timer
     print(f"Execution time: {end_time - start_time} seconds")  # Print the execution time
