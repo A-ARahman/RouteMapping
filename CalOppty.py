@@ -140,6 +140,7 @@ def main():
 
     end_time = time.time()  # End the timer
     print(f"Execution time: {end_time - start_time} seconds")  # Print the execution time
+    time.sleep(2)  # Delay for 2 seconds before closing the terminal
 
 if __name__ == "__main__":
     main()
